@@ -1,8 +1,8 @@
 from fastapi import FastAPI
-from api.routes import auth, users
-import core.models as models
-from core.database import engine
 
+import core.models as models
+from api.routes import auth, users
+from core.database import engine
 
 models.Base.metadata.create_all(bind=engine)
 

@@ -5,11 +5,11 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
 from passlib.context import CryptContext
-from core.schemas import User, UserInDB, TokenData
-import core.models as models
 from sqlalchemy.orm import Session
-from core.database import SessionLocal
 
+import core.models as models
+from core.database import SessionLocal
+from core.schemas import TokenData, User
 
 # to get a string like this run:
 # openssl rand -hex 32
@@ -44,7 +44,7 @@ def verify_password(plain_password, hashed_password):
 
 
 def authenticate_user(db: Session, username: str, password: str):
-    """ Verify username and password match """
+    """Verify username and password match"""
     user = get_user(db, username)
     if not user:
         return False
@@ -56,6 +56,7 @@ def authenticate_user(db: Session, username: str, password: str):
 #######################################################
 
 # Encode JWT token
+
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     to_encode = data.copy()
@@ -73,7 +74,10 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
 # Authorisation methods:
 # Decode users JWT token, and then validate credentials against database
 
-async def get_current_user(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+
+async def get_current_user(
+    db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)
+):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",

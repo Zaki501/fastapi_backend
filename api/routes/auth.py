@@ -1,20 +1,24 @@
 from datetime import timedelta
 
-from fastapi import APIRouter, Depends, status, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
-from api.security import authenticate_user, create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
-import core.crud as crud
 from sqlalchemy.orm import Session
-import core.schemas as schemas
 
-router = APIRouter(
-    tags=["Auth"],
-    prefix="/api/auth"
+import core.crud as crud
+import core.schemas as schemas
+from api.security import (
+    ACCESS_TOKEN_EXPIRE_MINUTES,
+    authenticate_user,
+    create_access_token,
 )
 
-# linked to oauth2_scheme
+router = APIRouter(tags=["Auth"], prefix="/api/auth")
+
+
 @router.post("/login", response_model=schemas.Token)
-async def login_for_access_token(db: Session = Depends(crud.get_db), form_data: OAuth2PasswordRequestForm = Depends()):
+async def login_for_access_token(
+    db: Session = Depends(crud.get_db), form_data: OAuth2PasswordRequestForm = Depends()
+):
     user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
         raise HTTPException(
@@ -33,6 +37,7 @@ async def login_for_access_token(db: Session = Depends(crud.get_db), form_data: 
 # async def create_user_account(form_data: ):
 #     # importance of form data
 #     # work on logins first
+
 
 @router.post("/register", response_model=schemas.User)
 async def create_user(user: schemas.UserCreate, db: Session = Depends(crud.get_db)):

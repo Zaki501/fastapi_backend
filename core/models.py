@@ -1,9 +1,7 @@
 # sqlAlchemy models
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String
-from sqlalchemy.orm import relationship
+from sqlalchemy import Boolean, Column, Integer, String
 
 from core.database import Base
-
 
 
 class User(Base):

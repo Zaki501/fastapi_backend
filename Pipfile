@@ -13,6 +13,10 @@ python-jose = {extras = ["cryptography"], version = "*"}
 passlib = {extras = ["bcrypt"], version = "*"}
 
 [dev-packages]
+flake8 = "*"
+black = "*"
+isort = "*"
+pre-commit = "*"
 
 [requires]
 python_version = "3.9"

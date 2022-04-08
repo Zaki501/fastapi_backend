@@ -1,6 +1,7 @@
 # pydantic schemas
-from pydantic import BaseModel
 from typing import Optional
+
+from pydantic import BaseModel
 
 
 class Token(BaseModel):
@@ -25,13 +26,14 @@ class UserCreate(UserBase):
 # class UserForDB(UserBase):
 #     hashed_passowrd: str
 
+
 class User(UserBase):
     id: int
     disabled: Optional[bool] = None
 
     class Config:
         orm_mode = True
-    
+
 
 class UserInDB(User):
     hashed_password: str

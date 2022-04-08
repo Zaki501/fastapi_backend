@@ -1,2 +1,4 @@
 *.txt
 *.db
+# .pre-commit-config.yaml
+# setup.cfg

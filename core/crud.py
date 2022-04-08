@@ -1,10 +1,11 @@
 # interact with the database
 
 from sqlalchemy.orm import Session
-from core.database import SessionLocal
-import core.schemas as schemas
+
 import core.models as models
+import core.schemas as schemas
 from api.security import hash_password
+from core.database import SessionLocal
 
 
 # Dependency
@@ -14,6 +15,7 @@ def get_db():
         yield db
     finally:
         db.close()
+
 
 def get_user(db: Session, username: str):
     return db.query(models.User).filter(models.User.username == username).first()
@@ -31,7 +33,7 @@ def create_user(db: Session, user: schemas.UserCreate):
         email=user.email,
         full_name=user.full_name,
         disabled=False,
-        hashed_password=hashed_password
+        hashed_password=hashed_password,
     )
 
     db.add(db_user)
@@ -41,6 +43,6 @@ def create_user(db: Session, user: schemas.UserCreate):
 
 
 # def get_user(db, username: str):
-#     if username in db:  
+#     if username in db:
 #         user_dict = db[username]
 #         return UserInDB(**user_dict)
