@@ -1,7 +1,10 @@
 from fastapi import APIRouter, Depends
 from core.schemas import User
 from api.security import get_current_active_user
-
+import core.schemas as schemas
+import core.crud as crud
+from sqlalchemy.orm import Session
+ 
 router = APIRouter(
     tags=["User"],
     prefix="/api/user"
