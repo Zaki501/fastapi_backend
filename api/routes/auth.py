@@ -11,13 +11,14 @@ from api.security import (
     authenticate_user,
     create_access_token,
 )
+from core.database import get_db
 
 router = APIRouter(tags=["Auth"], prefix="/api/auth")
 
 
 @router.post("/login", response_model=schemas.Token)
 async def login_for_access_token(
-    db: Session = Depends(crud.get_db), form_data: OAuth2PasswordRequestForm = Depends()
+    db: Session = Depends(get_db), form_data: OAuth2PasswordRequestForm = Depends()
 ):
     user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
@@ -40,7 +41,7 @@ async def login_for_access_token(
 
 
 @router.post("/register", response_model=schemas.User)
-async def create_user(user: schemas.UserCreate, db: Session = Depends(crud.get_db)):
+async def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     # db_user = crud.get_user_by_email(db, email=user.email)
     # if db_user:
     #     raise HTTPException(status_code=400, detail="Email already registered")

@@ -5,16 +5,6 @@ from sqlalchemy.orm import Session
 import core.models as models
 import core.schemas as schemas
 from api.security import hash_password
-from core.database import SessionLocal
-
-
-# Dependency
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 
 def get_user(db: Session, username: str):
