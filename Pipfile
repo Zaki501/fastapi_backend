@@ -11,12 +11,15 @@ fastapi = "*"
 python-multipart = "*"
 python-jose = {extras = ["cryptography"], version = "*"}
 passlib = {extras = ["bcrypt"], version = "*"}
+requests = "*"
 
 [dev-packages]
 flake8 = "*"
 black = "*"
 isort = "*"
 pre-commit = "*"
+pytest = "*"
+pytest-cov = "*"
 
 [requires]
 python_version = "3.9"
