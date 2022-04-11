@@ -34,12 +34,6 @@ async def login_for_access_token(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-# @router.post("/register", response_model=Token)
-# async def create_user_account(form_data: ):
-#     # importance of form data
-#     # work on logins first
-
-
 @router.post("/register", response_model=schemas.User)
 async def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)

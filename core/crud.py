@@ -1,5 +1,3 @@
-# interact with the database
-
 from sqlalchemy.orm import Session
 
 import core.models as models
@@ -13,10 +11,6 @@ def get_user(db: Session, username: str):
 
 def get_user_by_email(db: Session, email: str):
     return db.query(models.User).filter(models.User.email == email).first()
-
-
-def get_all_users():
-    pass
 
 
 def create_user(db: Session, user: schemas.UserCreate):
@@ -34,9 +28,3 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.commit()
     db.refresh(db_user)
     return db_user
-
-
-# def get_user(db, username: str):
-#     if username in db:
-#         user_dict = db[username]
-#         return UserInDB(**user_dict)
